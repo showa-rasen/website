@@ -1,0 +1,120 @@
+/* ==================================================
+_footer.scss
+================================================== */
+
+.footer {
+  overflow: hidden;
+
+padding: 140px 0 40px;
+
+
+@include mq-down(lg) {
+
+
+padding: 100px 0 30px;
+
+
+}
+
+&__logo {
+
+
+width: 60px;
+
+margin: 0 auto 60px;
+
+img {
+
+  width: 100%;
+  display: block;
+
+}
+
+
+}
+
+&__nav {
+
+
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+
+gap: 40px;
+
+margin-bottom: 60px;
+
+@include mq-down(lg) {
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  text-align: center;
+
+}
+
+a {
+
+  transition: .3s;
+
+  &:hover {
+
+    opacity: .6;
+
+  }
+
+}
+
+
+}
+
+&__sub {
+
+
+display: flex;
+justify-content: center;
+
+gap: 30px;
+
+font-size: .85rem;
+
+@include mq-down(lg) {
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  text-align: center;
+
+}
+
+
+}
+
+&__copy {
+
+
+margin-top: 40px;
+
+text-align: center;
+
+font-size: .75rem;
+
+color: #7d756a;
+
+
+}
+
+&__image{
+  text-align:center;
+  padding:0 4rem;
+  position:relative;
+  top:80px;
+  img{
+    width:100%;
+    max-width:400px;
+  }
+}
+
+}
