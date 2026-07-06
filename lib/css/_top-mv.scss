@@ -6,7 +6,7 @@ _top-mv.scss
   position: relative;
   height: 100vh;
   min-height: 720px;
-  min-width:1500px;
+  min-width:1000px;
   overflow: hidden;
   background: #111722;
 
@@ -121,7 +121,7 @@ _top-mv.scss
     position: absolute;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 0;
     width: 300px;
     transform: skewX(-14deg);
 
@@ -132,13 +132,13 @@ _top-mv.scss
     }
 
     &--02 {
-      left: 40px;
+      left: 20px;
       top: -160px;
       width: 500px;
     }
 
     &--03 {
-      right: 460px;
+      right: 437px;
       top: -110px;
       width: 500px;
     }
@@ -182,7 +182,7 @@ _top-mv.scss
     position:relative;
     overflow: hidden;
     background: #222;
-
+    border:20px solid #161B27;
     img {
       position: absolute;
       inset: 0;
@@ -194,81 +194,36 @@ _top-mv.scss
   }
 
    &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    &--current,
+    &--next {
+      position: absolute;
+      inset: 0;
+    }
+
     &--current {
       z-index: 1;
+      opacity: 1;
     }
 
     &--next {
       z-index: 2;
-      clip-path: inset(100% 0 0 0);
+      opacity: 0;
+      clip-path: none !important;
+      pointer-events: none;
+      transition: opacity 1.2s ease;
     }
   }
 
   &__item.is-changing {
-    &[data-dir="up"] {
-      .mv01__img--next {
-        animation: maskUp 0.5s ease-in-out forwards;
-      }
-    }
-
-    &[data-dir="down"] {
-      .mv01__img--next {
-        animation: maskDown 0.5s ease-in-out forwards;
-      }
-    }
-
-    &[data-dir="left"] {
-      .mv01__img--next {
-        animation: maskLeft 0.5s ease-in-out forwards;
-      }
-    }
-
-    &[data-dir="right"] {
-      .mv01__img--next {
-        animation: maskRight 0.5s ease-in-out forwards;
-      }
+    .mv01__img--next {
+      opacity: 1;
     }
   }
 
-  @keyframes maskUp {
-    0% {
-      clip-path: inset(100% 0 0 0);
-    }
-
-    100% {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-
-  @keyframes maskDown {
-    0% {
-      clip-path: inset(0 0 100% 0);
-    }
-
-    100% {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-
-  @keyframes maskLeft {
-    0% {
-      clip-path: inset(0 0 0 100%);
-    }
-
-    100% {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-
-  @keyframes maskRight {
-    0% {
-      clip-path: inset(0 100% 0 0);
-    }
-
-    100% {
-      clip-path: inset(0 0 0 0);
-    }
-  }
 
   &__copy {
     position: relative;
@@ -279,56 +234,67 @@ _top-mv.scss
     color: #fff;
     text-align: center;
     transform: translate(-50%, -50%);
-    /*
-    &::before{
-      content:"";
-      display:block;
-      position:absolute;
-      top:50%;
-      left:40%;
-      width:100%;
-      height:100%;
-      background:rgba(22,27,39,0.8);
-      transform: skewX(-14deg) translate(-50%,-50%);
-      z-index: -1;
-      padding:3rem 3rem;
-    }
-    */
-
   }
 
   &__title {
+    position: relative;
+    display: block;
+    min-height: calc(3rem * 1.75 * 3);
     margin: 0;
     font-size: 3rem;
     font-weight: bold;
     line-height: 1.75;
     letter-spacing: 0.08em;
-    //@include font-serif();
-    text-shadow: -10px -10px 20px rgba(255, 177, 105, 0.9),10px 10px 20px rgba(255, 121, 130, 0.9);
-    .char{
-      display:inline-block;
-      opacity:0;
-      transform:translateY(12px);
-    }
+    text-shadow:
+      0px 0px 10px rgba(255, 177, 105, 0.0),
+      0px 0px 10px rgba(255, 121, 130, 0.0);
+  }
 
-    &.is-show{
+  &__copy-layer {
+    position: absolute;
+    inset: 0;
+    display: block;
+    opacity: 0;
+    transform: scale(.98);
+    transform-origin: center;
+    transition:
+      opacity 3s ease,
+      transform 5s linear,
+      text-shadow 5s ease;
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
 
-      .char{
+  &__copy-layer.is-visible {
+    z-index: 2;
+    opacity: 1;
+    transform: scale(1.06);
+    text-shadow:
+      -10px -10px 20px rgba(255, 177, 105, 0.9),
+      10px 10px 20px rgba(255, 121, 130, 0.9);
+  }
 
-        animation:charFade .6s forwards;
-
-      }
-
-    }
+  &__copy-layer.is-hide {
+    z-index: 1;
+    opacity: 0;
+    transform: scale(1.09);
+    transition:
+      opacity 1.2s linear,
+      transform 1.2s linear,
+      text-shadow 1.2s linear;
+    text-shadow:
+      0px 0px 10px rgba(255, 177, 105, 0.0),
+      0px 0px 10px rgba(255, 121, 130, 0.0);
   }
 
   &__lead {
     margin-top: 32px;
-    font-size: 16px;
+    font-size: 1.8rem;
     font-weight: 700;
     line-height: 1.8;
     letter-spacing: 0.06em;
   }
+
 }
 
 @keyframes charFade{
@@ -614,12 +580,25 @@ _top-mv.scss
   }
 
   .swiper-slide {
+    overflow: hidden;
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transform: scale(1);
+      //transition: transform 4.6s linear;
     }
   }
+
+  /*
+  .swiper-slide-active,
+  .swiper-slide-prev {
+    img {
+      transform: scale(1.08);
+    }
+  }
+  */
+
 
   &__copy {
     position: absolute;
@@ -645,45 +624,43 @@ _top-mv.scss
   }
 }
 
+
 @media screen and (max-width: 768px) {
 
-  @media screen and (max-width: 768px) {
+  .top-mv {
+    height: 100svh;
+    min-height: 0;
+    min-width: auto;
+  }
 
-    .top-mv {
-      height: 100svh;
-      min-height: 0;
-      min-width: auto;
-    }
+  .top-mv .swiper,
+  .top-mv .swiper-wrapper,
+  .top-mv .swiper-slide {
+    height: 100%;
+    min-height: 0;
+  }
 
-    .top-mv .swiper,
-    .top-mv .swiper-wrapper,
-    .top-mv .swiper-slide {
-      height: 100%;
-      min-height: 0;
-    }
+  .mv01,
+  .mv02,
+  .mv03 {
+    height: 100%;
+    min-height: 0;
+  }
 
-    .mv01,
-    .mv02,
-    .mv03 {
-      height: 100%;
-      min-height: 0;
-    }
+  .mv01__item {
+    height: 190px;
+  }
 
-    .mv01__item {
-      height: 190px;
-    }
+  .mv02__scene {
+    width: 1920px;
+    height: 1080px;
+  }
 
-    .mv02__scene {
-      width: 1920px;
-      height: 1080px;
-    }
-
-    .mv01__copy,
-    .mv02__copy,
-    .mv03__copy {
-      width: auto;
-      max-width: none;
-    }
+  .mv01__copy,
+  .mv02__copy,
+  .mv03__copy {
+    width: auto;
+    max-width: none;
   }
 
   /*----------------------------------
@@ -762,7 +739,7 @@ _top-mv.scss
 
     &__lead{
       margin-top:28px;
-      font-size:.875rem;
+      font-size:.1.1rem;
       line-height:2;
     }
 
